@@ -8,7 +8,7 @@ Reads simulation data files exported from CIVA. Types of files which can be read
 
 The returned data type for all read files is an `xarray` DataArray.
 
-## LeCroy
+## LeCroy readers
  
 This reads standard binary files saved by the LeCroy oscilloscope. Returns a dictionary with the following fields:
 
@@ -16,11 +16,11 @@ This reads standard binary files saved by the LeCroy oscilloscope. Returns a dic
 - `x`: An array of the horizontal values (usually time).
 - `y`: An array of vertical values (usually volts).
 
-## SAFT
+## SAFT readers
 
 Reads files saved by the SAFT software which was developed at PNNL by the Applied Physics group. Currently is `pandas.Panel` (3-D array types) data type is returned. 
 
-## Ultravision 
+## Ultravision readers
 
 Reads exported ultravision files. Currently supports reading multiple measurements within the same file. 
 
