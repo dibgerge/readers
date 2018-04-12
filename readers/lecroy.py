@@ -3,7 +3,7 @@ import numpy as np
 from datetime import datetime
 
 
-def read_lecroy(filename):
+def lecroy(filename):
     """
     Reads binary waveform file (.trc) saved from LeCroy Waverunner Oscilloscope.
 

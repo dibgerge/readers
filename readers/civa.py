@@ -4,7 +4,7 @@ import pandas as pd
 import re
 
 
-def read_civa_cscan(fname):
+def cscan(fname):
     """
     Reads a C-scan file saved from a CIVA simulation. The X-Y axis coordinates are returned in
     units of meters.
@@ -27,7 +27,7 @@ def read_civa_cscan(fname):
     return da
 
 
-def read_civa_tcscan(fname):
+def tcscan(fname):
     """
     Reads a True C-scan file saved from a CIVA simulation.
 
@@ -67,7 +67,7 @@ def read_civa_tcscan(fname):
     return da
 
 
-def read_civa_bscan(fname):
+def bscan(fname):
     """
     Reads a B-scan txt file saved in CIVA-UT modeling software.
 
@@ -106,7 +106,7 @@ def read_civa_bscan(fname):
     return da
 
 
-def read_civa_beam(fname):
+def beam(fname):
     """
     Reads a B-scan txt file saved in CIVA-UT modeling software.
 

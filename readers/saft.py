@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 
 
-def read_saft(fname):
+def saft(fname):
     """
     Reads a binary file stored in SAFT format. SAFT is a custom scanner at PNNL.
 

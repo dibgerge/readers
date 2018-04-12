@@ -97,7 +97,7 @@ def _read_file(fname, angles=None, fs=None, speed=None):
     return headers, data
 
 
-def read_ultravision(fname, angles=None, fs=None, speed=None):
+def ultravision(fname, angles=None, fs=None, speed=None):
     """
     Reads ultrasound scans saved in UltraVision (ZETEC, Inc. software) text file format.
 

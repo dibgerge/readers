@@ -1,0 +1,27 @@
+package:
+  name: readers
+  version: 0.1.0
+
+source:
+  git_url: https://dibg280@stash.pnnl.gov/scm/ndem/readers.git
+
+build:
+  # If the installation is complex, or different between Unix and Windows, use
+  # separate bld.bat and build.sh files instead of this key.  Add the line
+  # "skip: True  # [py<35]" (for example) to limit to Python 3.5 and newer, or
+  # "skip: True  # [not win]" to limit to Windows.
+  script: python setup.py install --single-version-externally-managed --record=record.txt
+
+requirements:
+  build:
+    - python
+    - setuptools
+  run:
+    - python
+    - numpy
+    - pandas
+    - xarray
+
+about:
+  home: https://stash.pnnl.gov/projects/NDEM/repos/readers
+  summary: Interrfaces to read data exported from simulation software and instruments within the Applied Physics group at Pacific Northwest Natinal Laboratory.

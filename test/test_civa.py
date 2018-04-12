@@ -14,7 +14,7 @@ class TestCIVA(unittest.TestCase):
 
     def test_bscan(self):
         fname = join(self.dir_path, 'data', 'civa_bscan.txt')
-        out = readers.read_civa_bscan(fname)
+        out = readers.civa.bscan(fname)
         self.assertIsInstance(out, xr.DataArray)
         self.assertTrue(out.Z.attrs['units'] == 's')
         self.assertTrue(out.X.attrs['units'] == 'mm')
@@ -24,7 +24,7 @@ class TestCIVA(unittest.TestCase):
 
     def test_truecscan(self):
         fname = join(self.dir_path, 'data', 'civa_truecscan.grid')
-        out = readers.read_civa_tcscan(fname)
+        out = readers.civa.tcscan(fname)
         self.assertIsInstance(out, xr.DataArray)
         self.assertTrue(out.X.attrs['units'] == 'mm')
         self.assertTrue(out.Y.attrs['units'] == 'mm')
@@ -34,7 +34,7 @@ class TestCIVA(unittest.TestCase):
 
     def test_cscan(self):
         fname = join(self.dir_path, 'data', 'civa_cscan.txt')
-        out = readers.read_civa_cscan(fname)
+        out = readers.civa.cscan(fname)
         self.assertIsInstance(out, xr.DataArray)
         pyplot.pcolormesh(out.X, out.Y, out)
         pyplot.title('CIVA C-SCAN')

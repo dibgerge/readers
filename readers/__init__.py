@@ -5,8 +5,6 @@ scans or line scans:
 - **Y**: Name of axis along the Index direction
 - **Z**: Time axis or depth of the specimen
 
-.. currentmodule:: utkit.io
-
 .. autosummary::
     :nosignatures:
     :toctree: generated/
@@ -18,9 +16,9 @@ scans or line scans:
 """
 # from __future__ import absolute_import
 
-from .saft import read_saft
-from .lecroy import read_lecroy
-from .ultravision import read_ultravision
-from .civa import *
+from .saft import saft
+from .lecroy import lecroy
+from .ultravision import ultravision
+from . import civa
 
 
