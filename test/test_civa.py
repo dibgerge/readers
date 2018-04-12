@@ -24,7 +24,7 @@ class TestCIVA(unittest.TestCase):
 
     def test_truecscan(self):
         fname = join(self.dir_path, 'data', 'civa_truecscan.grid')
-        out = readers.civa.tcscan(fname)
+        out = readers.civa.true_cscan(fname)
         self.assertIsInstance(out, xr.DataArray)
         self.assertTrue(out.X.attrs['units'] == 'mm')
         self.assertTrue(out.Y.attrs['units'] == 'mm')

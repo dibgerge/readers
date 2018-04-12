@@ -4,44 +4,50 @@ import pandas as pd
 import re
 
 
-def cscan(fname):
+def cscan(file_name):
     """
     Reads a C-scan file saved from a CIVA simulation. The X-Y axis coordinates are returned in
     units of meters.
 
     Parameters
     ----------
-    fname : string
+    file_name : string
         Full path name of the CIVA C-scan file.
 
     Returns
     -------
     cscan : xarray.DataArray
-        The simulation C-scan.
+        The simulation C-scan. It has two coordinate axes: X, Y, and each coordinate has an
+        attribute `units` indicating the units for the axis.
     """
-    scan = pd.read_table(fname, sep=';', usecols=[0, 1, 4], encoding='iso8859_15',
-                         index_col=[0, 1], squeeze=True).unstack()
+    scan = pd.read_table(file_name,
+                         sep=';',
+                         usecols=[0, 1, 4],
+                         encoding='iso8859_15',
+                         index_col=[0, 1],
+                         squeeze=True).unstack()
     da = xr.DataArray(scan.values, coords=[('Y', scan.index), ('X', scan.columns)])
     da.coords['X'].attrs['units'] = 'mm'
     da.coords['Y'].attrs['units'] = 'mm'
     return da
 
 
-def tcscan(fname):
+def true_cscan(file_name):
     """
     Reads a True C-scan file saved from a CIVA simulation.
 
     Parameters
     ----------
-    fname : str
+    file_name : str
         Full path name of the CIVA C-scan file
 
     Returns
     -------
     cscan : xarray.DataArray
-        The simulation True C-scan.
+        The simulation True C-scan. The `DataArray` has two coords: X, Y, and each coord has a
+        `units` attribute.
     """
-    with open(fname) as fid:
+    with open(file_name) as fid:
         parts = fid.readline().split(';')
         xlims = [float(parts[1]), float(parts[2])]
         ylims = [float(parts[3]), float(parts[4])]
@@ -56,7 +62,10 @@ def tcscan(fname):
     X = np.arange(nx)*xstep + xlims[0]
     Y = np.arange(ny)*ystep + ylims[0]
 
-    data = np.genfromtxt(fname,  delimiter=';', skip_header=5, usecols=(0, 1, 5))
+    data = np.genfromtxt(file_name,
+                         delimiter=';',
+                         skip_header=5,
+                         usecols=(0, 1, 5))
     vals = np.zeros((len(Y), len(X)))
     x_ind = data[:, 1].astype(int)
     y_ind = data[:, 0].astype(int)
@@ -67,13 +76,13 @@ def tcscan(fname):
     return da
 
 
-def bscan(fname):
+def bscan(file_name):
     """
     Reads a B-scan txt file saved in CIVA-UT modeling software.
 
     Parameters
     ----------
-    fname : str
+    file_name : str
         Name of the file, including the full path if not in the current directory.
 
     Returns
@@ -85,7 +94,7 @@ def bscan(fname):
     skip_lines = 18
 
     # read the header
-    with open(fname) as fid:
+    with open(file_name) as fid:
         for i, line in enumerate(fid):
             if i == skip_lines-1:
                 coords = re.findall(r'\d*\.?\d+', line)
@@ -94,7 +103,7 @@ def bscan(fname):
                 ind = np.array([j for j, c in enumerate(cols) if 'val' in c])
                 break
 
-    d = np.genfromtxt(fname,  delimiter=';', skip_header=skip_lines)
+    d = np.genfromtxt(file_name, delimiter=';', skip_header=skip_lines)
     # convert from microseconds in CIVA b-scan file to seconds
     Z = d[:, 0]*1e-6
     X = coords[ind-1]
@@ -106,24 +115,25 @@ def bscan(fname):
     return da
 
 
-def beam(fname):
+def beam(file_name):
     """
     Reads a B-scan txt file saved in CIVA-UT modeling software.
 
     Parameters
     ----------
-    fname : str
+    file_name : str
         Name of the file, including the full path if not in the current directory.
 
     Returns
     -------
     bscan : xarray.DatArray
-        A `xarray.DataArray` object containing the B-scan.
+        A `xarray.DataArray` object containing the B-scan. The `DataArray` has two coords: X, Z
+        and each coordinate has a `units` attribute.
     """
     # this is the default start of the header in a civa b-scan txt file
     skip_lines = 9
 
-    with open(fname) as fid:
+    with open(file_name) as fid:
         for i, line in enumerate(fid):
             if i == skip_lines-1:
                 coords = re.findall(r'\d*\.?\d+', line)
@@ -132,7 +142,7 @@ def beam(fname):
                 ind = np.array([j for j, c in enumerate(cols) if 'val' in c])
                 break
 
-    d = np.genfromtxt(fname,  delimiter=';', skip_header=skip_lines)
+    d = np.genfromtxt(file_name, delimiter=';', skip_header=skip_lines)
     # convert from microseconds in CIVA b-scan file to seconds
     Z = d[:, 0]
     X = coords[ind-1]
