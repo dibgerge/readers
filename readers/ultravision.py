@@ -153,6 +153,11 @@ def ultravision(fname, angles=None, fs=None, speed=None):
     else:
         if angles is None:
             angles = [h['focal_law'] for h in headers]
+
+            # check if all focal_law headers are unique
+            if len(set(angles)) != len(headers):
+                angles = list(range(len(headers)))
+
         out = {}
         for h, a, d in zip(headers, angles, data):
             out[a] = xr.DataArray(d, coords=[('X', h['x']), ('Y', h['y']), ('Z', h['z'])])

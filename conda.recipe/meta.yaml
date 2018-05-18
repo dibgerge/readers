@@ -3,7 +3,7 @@ package:
   version: 0.1.0
 
 source:
-  git_url: https://dibg280@stash.pnnl.gov/scm/ndem/readers.git
+  git_url: https://github.com/dibgerge/readers.git
 
 build:
   # If the installation is complex, or different between Unix and Windows, use
