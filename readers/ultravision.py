@@ -48,7 +48,7 @@ def _process_header(header, angles, fs, speed):
         else:
             # TODO: assuming True depth if nothing is specified
             zstart *= 2/(speed*np.cos(np.deg2rad(angles[0])))
-        out['z'] = zstart + np.arange(nz)/fs
+        out['z'] = (zstart + np.arange(nz))/fs
         out['units']['z'] = 's'
 
     out['focal_law'] = float(header['Focal Law'])

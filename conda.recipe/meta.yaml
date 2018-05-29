@@ -23,5 +23,5 @@ requirements:
     - xarray
 
 about:
-  home: https://stash.pnnl.gov/projects/NDEM/repos/readers
+  home: https://github.com/dibgerge/readers.git
   summary: Interrfaces to read data exported from simulation software and instruments within the Applied Physics group at Pacific Northwest Natinal Laboratory.
