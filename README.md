@@ -42,7 +42,7 @@ Reads standard binary files saved by the LeCroy oscilloscope. Returns a dictiona
 
 ## SAFT
 
-**`readers.saft(fname)``**
+**``readers.saft(fname)``**
 
 Reads files saved by the SAFT software (proprietary). Currently a `pandas.Panel` (3-D array types) data type is returned, containing the three dimensions of an ultrasound scan: `items=Y`, `major_axis=t`, `minor_axis=X`.
 
