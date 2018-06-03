@@ -18,7 +18,7 @@ scans or line scans:
 
 from .saft import saft
 from .lecroy import lecroy
-from ._ultravision import ultravision
+from .ultravision import ultravision
 from . import civa
 
 

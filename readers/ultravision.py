@@ -26,13 +26,17 @@ def _process_header(header, fs):
     units = [p[-1][1:-1] if p[-1][0] == '(' and p[-1][-1] == ')' else None for p in parts]
     units = pd.Series(units, index=header.index)
     out['units'] = {'x': units['IndexResol'], 'y': units['ScanResol'], 'z': 'seconds'}
-    out['z'] = np.arange(nz)/fs
+
+    if fs is None:
+        pass
+    else:
+        out['z'] = np.arange(nz)/fs
 
     out['channel'] = header['Channel']
     return out
 
 
-def ultravision(fname, fs):
+def ultravision(fname, fs=None):
     """
     Reads ultrasound scans saved in UltraVision (ZETEC, Inc. software) text file format.
 
