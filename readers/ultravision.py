@@ -28,7 +28,9 @@ def _process_header(header, fs):
     out['units'] = {'x': units['IndexResol'], 'y': units['ScanResol'], 'z': 'seconds'}
 
     if fs is None:
-        pass
+        ts = float(header['USoundResol'])
+        tstart = float(header['USoundStart'])
+        out['z'] = tstart + np.arange(nz)*ts
     else:
         out['z'] = np.arange(nz)/fs
 
@@ -84,10 +86,17 @@ def ultravision(fname, fs=None):
             # the last column is giving NaN values, just remove it.
             u = u.iloc[:, :-1].values.reshape(nx, ny, -1, order='F')
 
-            out[header['channel']] = xr.DataArray(u,
-                                                  coords=[('X', header['x']),
-                                                          ('Y', header['y']),
-                                                          ('Z', header['z'])])
+            da = xr.DataArray(u, coords=[('X', header['x']),
+                                         ('Y', header['y']),
+                                         ('Z', header['z'])])
+
+            n = 1
+            key = header['channel']
+            while key in out:
+                key = header['channel'] + '_{}'.format(n)
+                n += 1
+
+            out[key] = da
             skiprows += nx * ny
             # memory management
             del u
